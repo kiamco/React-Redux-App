@@ -1,10 +1,11 @@
 import {
-    FIND_CHAR,
-    PICK_WORD,
     RESET_GAME,
+    PICK_WORD,
     FETCH_WORD_LIST,
     FETCH_WORD_LIST_FAILURE,
-    FETCH_WORD_START
+    FETCH_WORD_START,
+    MATCH_CHAR,
+    START_GAME
 } from '../actions/index';
 
 const initialState = {
@@ -35,7 +36,7 @@ export const WordReducer = (state = initialState, action) => {
                 ...state,
                 wordChars: [
                     ...state.wordChars,
-                    // create an obj per each charater of word choice
+                    // creates an obj per each charater of word choice
                     state.wordChoice.split('').map(el => {
                         return { char: el, isShow: false }
                     })
