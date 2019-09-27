@@ -1,11 +1,12 @@
 import Axios from 'axios';
 
-const FIND_CHAR = 'FIND_CHAR';
-const FETCH_WORD = 'FETCH_WORD';
-const RESET_GAME = 'RESET_GAME';
-const FETCH_WORD_START = 'FETCH_WORD_START'
-const FETCH_WORD_LIST = 'FETCH_WORD_LIST'
-const FETCH_WORD_LIST_FAILURE = 'FETCH_WORD_LIST_FAILURE';
+export const FIND_CHAR = 'FIND_CHAR';
+export const PICK_WORD = 'PICK_WORD';
+export const RESET_GAME = 'RESET_GAME';
+export const FETCH_WORD_START = 'FETCH_WORD_START'
+export const FETCH_WORD_LIST = 'FETCH_WORD_LIST'
+export const FETCH_WORD_LIST_FAILURE = 'FETCH_WORD_LIST_FAILURE';
+export const START_GAME = 'START_GAME';
 
 // http://app.linkedin-reach.io/words?difficulty=10
 
@@ -42,6 +43,10 @@ export const resetGame = () => {
     return (dispatch({ type: RESET_GAME }));
 }
 
-export const fetchWord = () => {
-    return (dispatch({ type: FETCH_WORD }))
+export const pickWord = () => {
+    return (dispatch({ type: PICK_WORD }))
+}
+
+export const startGame = () => {
+    return (dispatch({type:START_GAME}))
 }
