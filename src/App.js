@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import WordBuilder from './components/wordBuilder';
-import './App.css';
+import './styles/all.scss';
 import { connect } from 'react-redux';
 import { resetGame, startGame, matchChar, fetchWordList, pickWord } from './actions/index';
 
@@ -20,8 +20,8 @@ function App({
     if (wordList !== '') {
       startGame();
     }
-  }, [fetchWordList, wordList])
-  console.log(wordChars);
+  }, [wordList])
+
   return (
     <div className="App">
       <WordBuilder charaterObjs={wordChars} />
