@@ -12,7 +12,8 @@ const initialState = {
     isFetching: false,
     wordChoice: '',
     wordChars: [],
-    wordList: ''
+    wordList: '',
+    life:6
 };
 
 
@@ -40,6 +41,12 @@ export const WordReducer = (state = initialState, action) => {
                         return { char: el, isShow: false }
                     })
             }
+        case MATCH_CHAR:
+            return (
+                state.wordChars.map(letter => {
+                    return (letter.char === action.payload ? letter.isShow = true : state.life - 1)
+                })
+            ) 
         default:
             return state
     }
