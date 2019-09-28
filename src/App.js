@@ -1,17 +1,30 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import WordBuilder from './components/wordBuilder';
 import './App.css';
-import {connect} from 'react-redux';
-import {resetGame, startGame, matchChar,fetchWordList } from './actions/index';
+import { connect } from 'react-redux';
+import { resetGame, startGame, matchChar, fetchWordList, pickWord } from './actions/index';
 
-function App(props) {
+function App({ 
+  isFetching,
+  wordChars,
+  wordChoice,
+  wordList,
+  resetGame,
+  startGame,
+  pickWord,
+  matchChar, 
+  fetchWordList}) {
 
-  useEffect(()=> {
-    props.fetchWordList();
-  },[])
+  useEffect(() => {
+    fetchWordList();
+    if (wordList !== '') {
+      startGame();
+    }
+  }, [fetchWordList, wordList])
+  console.log(wordChars);
   return (
     <div className="App">
-      <WordBuilder charaterObjs={props.wordChars}/>
+      <WordBuilder charaterObjs={wordChars} />
     </div>
   );
 }
@@ -29,5 +42,5 @@ const mapToStateProps = state => {
 
 export default connect(
   mapToStateProps,
-  {resetGame, startGame, fetchWordList, matchChar}
+  { resetGame, startGame, fetchWordList, matchChar }
 )(App);

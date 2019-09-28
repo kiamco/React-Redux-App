@@ -11,7 +11,7 @@ import {
 const initialState = {
     isFetching: false,
     wordChoice: '',
-    wordChars: [{}],
+    wordChars: [],
     wordList: ''
 };
 
@@ -23,8 +23,8 @@ export const WordReducer = (state = initialState, action) => {
         let wordsArray = words.split('\n');
         return wordsArray[Math.floor(Math.random() * wordsArray.length)];
     }
-
     switch (action.type) {
+
         case FETCH_WORD_START:
             return { ...state, isFetching: true };
         case FETCH_WORD_LIST:
@@ -34,13 +34,11 @@ export const WordReducer = (state = initialState, action) => {
         case START_GAME:
             return {
                 ...state,
-                wordChars: [
-                    ...state.wordChars,
+                wordChars:
                     // creates an obj per each charater of word choice
                     state.wordChoice.split('').map(el => {
                         return { char: el, isShow: false }
                     })
-                ]
             }
         default:
             return state

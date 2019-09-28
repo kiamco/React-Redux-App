@@ -12,15 +12,18 @@ export const PICK_WORD = 'PICK_WORD';
 
 export const fetchWordList = () => {
     return function (dispatch) {
+        const proxy = "https://cors-anywhere.herokuapp.com/";
         dispatch({ type: FETCH_WORD_START });
         setTimeout(() => {
-            Axios.get('http://app.linkedin-reach.io/words?difficulty=10')
+            Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
                 .then(res => {
                     console.log(res)
                     dispatch({
                         type: FETCH_WORD_LIST,
                         payload: res.data
-                    })
+                    });
+                    dispatch({ type: PICK_WORD })
+
                 })
                 .catch(err => {
                     console.log(err);
@@ -38,7 +41,9 @@ export const resetGame = () => {
 }
 
 export const startGame = () => {
-    return ({ type: START_GAME })
+    return function (dispatch) {
+        dispatch({ type: START_GAME })
+    }
 }
 
 export const matchChar = (character) => {
@@ -49,5 +54,7 @@ export const matchChar = (character) => {
 }
 
 export const pickWord = () => {
-    return ({type:PICK_WORD})
+    return function (dispatch) {
+        dispatch({ type: PICK_WORD })
+    }
 }
