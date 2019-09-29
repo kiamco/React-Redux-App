@@ -1,14 +1,22 @@
-import React from 'react';
-import { directive } from '@babel/types';
+import React, { useState } from 'react';
 
-const Keyboard = ({matchLetter}) => {
-    const letters = 'abcdefghijklmnopqrstuv';
+const Keyboard = ({ matchLetter }) => {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
 
-    return(
+    return (
         <div className='keyboard'>
-            {letters.split('').map(el => <button className='keyboard-letter'
-            onClick={()=>matchLetter(el)}>
-            {el}</button>)}
+            {
+                // iterate through letters and create buttons
+                letters.split('').map(el =>
+                    <button
+                        className='keyboard-letter'
+                        onClick={(e) =>{
+                            matchLetter(el);
+                        }}
+                    >
+                        {el}
+                    </button>)
+            }
         </div>
     )
 }

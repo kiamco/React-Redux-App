@@ -12,7 +12,7 @@ const store = createStore(WordReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App key='3'/>
     </Provider>,
     document.getElementById('root'));
 

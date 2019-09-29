@@ -4,7 +4,7 @@ import CharContainer from './charContainer';
 const WordBuilder = ({ charaterObjs }) => {
     return (
         <div className='word-container'>
-            {charaterObjs.map(el => <CharContainer charObj={el} />)}
+            {charaterObjs.map((el,index) => <CharContainer key={index} charObj={el} />)}
         </div>
     )
 }

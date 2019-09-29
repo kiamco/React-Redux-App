@@ -13,7 +13,7 @@ const initialState = {
     wordChoice: '',
     wordChars: [],
     wordList: '',
-    life:6
+    life: 6,
 };
 
 
@@ -38,15 +38,25 @@ export const WordReducer = (state = initialState, action) => {
                 wordChars:
                     // creates an obj per each charater of word choice
                     state.wordChoice.split('').map(el => {
-                        return { char: el, isShow: false }
+                        return { char: el, isShow: false, isClicked: false }
                     })
             }
         case MATCH_CHAR:
             return (
-                state.wordChars.map(letter => {
-                    return (letter.char === action.payload ? letter.isShow = true : state.life - 1)
-                })
-            ) 
+                {
+                    ...state,
+                    wordChars: state.wordChars.map(letter =>
+                        // if payload matches a letter in selected word then show letter
+                        letter.char === action.payload ?
+                            {
+                                ...letter,
+                                isShow: true,
+                                isClicked: true
+                            } : 
+                            letter
+                    )
+                }
+            )
         default:
             return state
     }

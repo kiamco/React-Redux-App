@@ -17,7 +17,7 @@ export const fetchWordList = () => {
         setTimeout(() => {
             Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                     dispatch({
                         type: FETCH_WORD_LIST,
                         payload: res.data

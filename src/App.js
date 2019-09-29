@@ -23,14 +23,15 @@ function App({
   }, [wordList])
 
   const letterCheck = (letter) => {
-    matchChar(letter);
+    let matched = matchChar(letter);
+    console.log(matched)
   }
 
   console.log(wordChars)
   return (
     <div className="App">
       <WordBuilder charaterObjs={wordChars} />
-      <Keyboard matchLetter={letterCheck}/>
+      <Keyboard  matchLetter={letterCheck} letters={wordChars}/>
     </div>
   );
 }
