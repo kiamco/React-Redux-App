@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    width: 20%;
+    max-width: 400px;
     margin: auto;
     .keyboard-letter {
         position: relative;
