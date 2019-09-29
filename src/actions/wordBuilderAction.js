@@ -9,30 +9,32 @@ export const MATCH_CHAR = 'MATCH_CAHR';
 export const PICK_WORD = 'PICK_WORD';
 
 // http://app.linkedin-reach.io/words?difficulty=10
+const getWordListByLevel = (level) => {
 
+}
 export const fetchWordList = () => {
-    return function (dispatch) {
+    return function(dispatch) {
         const proxy = "https://cors-anywhere.herokuapp.com/";
         dispatch({ type: FETCH_WORD_START });
-        setTimeout(() => {
-            Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
-                .then(res => {
-                    // console.log(res)
-                    dispatch({
-                        type: FETCH_WORD_LIST,
-                        payload: res.data
-                    });
-                    dispatch({ type: PICK_WORD })
-
-                })
-                .catch(err => {
-                    console.log(err);
-                    dispatch({
-                        type: FETCH_WORD_LIST_FAILURE,
-                        payload: err.message
-                    })
+        // setTimeout(() => {
+        Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
+            .then(res => {
+                // console.log(res)
+                dispatch({
+                    type: FETCH_WORD_LIST,
+                    payload: res.data
                 });
-        }, 2000);
+                dispatch({ type: PICK_WORD })
+
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch({
+                    type: FETCH_WORD_LIST_FAILURE,
+                    payload: err.message
+                })
+            });
+        // }, 0);
     }
 }
 
@@ -41,7 +43,7 @@ export const resetGame = () => {
 }
 
 export const startGame = () => {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch({ type: START_GAME })
     }
 }
@@ -54,7 +56,7 @@ export const matchChar = (character) => {
 }
 
 export const pickWord = () => {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch({ type: PICK_WORD })
     }
 }
