@@ -6,13 +6,13 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {WordReducer} from './reducers/index';
+import reducer from './reducers/index';
 
-const store = createStore(WordReducer, applyMiddleware(thunk));
+const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
     <Provider store={store}>
-        <App key='3'/>
+        <App />
     </Provider>,
     document.getElementById('root'));
 

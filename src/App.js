@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import WordBuilder from './components/wordBuilder';
 import './styles/all.scss';
 import { connect } from 'react-redux';
-import { resetGame, startGame, matchChar, fetchWordList, pickWord } from './actions/index';
+import { resetGame, startGame, matchChar, fetchWordList, pickWord } from './actions/wordBuilderAction';
 import Keyboard from './components/keyboard';
 function App({ 
   isFetching,
@@ -36,12 +36,12 @@ function App({
   );
 }
 
-const mapToStateProps = state => {
+const mapToStateProps = ({wordReducer}) => {
   return ({
-    isFetching: state.isFetching,
-    wordChoice: state.wordChoice,
-    wordChars: state.wordChars,
-    wordList: state.wordList
+    isFetching: wordReducer.isFetching,
+    wordChoice: wordReducer.wordChoice,
+    wordChars: wordReducer.wordChars,
+    wordList: wordReducer.wordList
   });
 }
 
