@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { isClicked, buildKeyboard, resetKeys } from '../actions/keyboardAction';
+import {decreaseLife} from '../actions/wordBuilderAction';
 
 const Keyboard = ({
     matchLetter,
     isClicked,
     buildKeyboard,
     keys,
-    resetKeys
+    resetKeys,
+    decreaseLife
 }) => {
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const Keyboard = ({
                         onClick={(e) => {
                             matchLetter(el.key);
                             isClicked(el.key);
+                            decreaseLife();
 
                         }}
                         disabled={el.isClicked}
@@ -44,5 +47,5 @@ const mapToStateProp = ({ keyboardReducer }) => {
 
 export default connect(
     mapToStateProp,
-    { isClicked, buildKeyboard, resetKeys }
+    { isClicked, buildKeyboard, resetKeys, decreaseLife}
 )(Keyboard);

@@ -7,6 +7,7 @@ export const FETCH_WORD_LIST_FAILURE = 'FETCH_WORD_LIST_FAILURE';
 export const START_GAME = 'START_GAME';
 export const MATCH_CHAR = 'MATCH_CAHR';
 export const PICK_WORD = 'PICK_WORD';
+export const LIFE_DECREASE = 'LIFE_DECREASE';
 
 // http://app.linkedin-reach.io/words?difficulty=10
 const getWordListByLevel = (level, dispatch) => {
@@ -36,27 +37,31 @@ export const fetchWordList = () => {
             });
         // }, 0);
     }
-}
+};
 
 export const resetGame = () => {
     return ({ type: RESET_GAME });
-}
+};
 
 export const startGame = () => {
     return function(dispatch) {
         dispatch({ type: START_GAME })
     }
-}
+};
 
 export const matchChar = (character) => {
     return ({
         type: MATCH_CHAR,
         payload: character
     });
-}
+};
 
 export const pickWord = () => {
     return function(dispatch) {
         dispatch({ type: PICK_WORD })
     }
+};
+
+export const decreaseLife = () => {
+    return (dispatch) => dispatch({ type: LIFE_DECREASE })
 }

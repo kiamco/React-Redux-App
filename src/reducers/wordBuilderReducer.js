@@ -5,13 +5,22 @@ import {
     FETCH_WORD_LIST_FAILURE,
     FETCH_WORD_START,
     MATCH_CHAR,
-    START_GAME
+    START_GAME,
+    LIFE_DECREASE
 } from '../actions/wordBuilderAction';
 
 const initialState = {
     isFetching: false,
     wordChoice: '',
-    wordChars: [],
+    wordChars: [
+        { char: 'L', isShow: true },
+        { char: 'O', isShow: true },
+        { char: 'A', isShow: true },
+        { char: 'D', isShow: true },
+        { char: 'I', isShow: true },
+        { char: 'N', isShow: true },
+        { char: 'G', isShow: true }
+    ],
     wordList: '',
     life: 6,
 };
@@ -64,6 +73,30 @@ export const WordReducer = (state = initialState, action) => {
                 wordChoice: wordListParser(state.wordList),
                 wordChars: updateWord(state.wordChoice)
             };
+        case FETCH_WORD_LIST_FAILURE:
+            return {
+                ...state,
+                wordChars: [
+                    { char: 'L', isShow: true },
+                    { char: 'O', isShow: true },
+                    { char: 'A', isShow: true },
+                    { char: 'D', isShow: true },
+                    { char: 'I', isShow: true },
+                    { char: 'N', isShow: true },
+                    { char: 'G', isShow: true },
+                    { char: ' ', isShow: true },
+                    { char: 'E', isShow: true },
+                    { char: 'R', isShow: true },
+                    { char: 'R', isShow: true },
+                    { char: 'O', isShow: true },
+                    { char: 'R', isShow: true },
+                ]
+            };
+        case LIFE_DECREASE:
+            return {
+                ...state,
+                life:state.life - 1
+            }
         default:
             return state
     }

@@ -1,1 +1,20 @@
-.new-game {}
+.extras {
+    margin: 20px auto;
+    width: 400px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    .life {
+        display: flex;
+        flex-flow: row wrap;
+    }
+    h2 {
+        margin: 0px 10px;
+    }
+    .new-game {
+        padding: 20px;
+        background: white;
+        border-radius: 0.5rem;
+    }
+}
