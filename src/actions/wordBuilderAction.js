@@ -9,7 +9,7 @@ export const MATCH_CHAR = 'MATCH_CAHR';
 export const PICK_WORD = 'PICK_WORD';
 
 // http://app.linkedin-reach.io/words?difficulty=10
-const getWordListByLevel = (level) => {
+const getWordListByLevel = (level, dispatch) => {
 
 }
 export const fetchWordList = () => {

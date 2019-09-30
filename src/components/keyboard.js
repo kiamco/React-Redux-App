@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { isClicked, buildKeyboard } from '../actions/keyboardAction';
+import { isClicked, buildKeyboard, resetKeys } from '../actions/keyboardAction';
 
 const Keyboard = ({
     matchLetter,
     isClicked,
     buildKeyboard,
-    keys
+    keys,
+    resetKeys
 }) => {
 
     useEffect(() => {
@@ -43,5 +44,5 @@ const mapToStateProp = ({ keyboardReducer }) => {
 
 export default connect(
     mapToStateProp,
-    { isClicked, buildKeyboard }
+    { isClicked, buildKeyboard, resetKeys }
 )(Keyboard);

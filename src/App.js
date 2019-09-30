@@ -4,7 +4,9 @@ import './styles/all.scss';
 import { connect } from 'react-redux';
 import { resetGame, startGame, matchChar, fetchWordList, pickWord } from './actions/wordBuilderAction';
 import Keyboard from './components/keyboard';
-function App({ 
+import { resetKeys } from './actions/keyboardAction';
+
+function App({
   isFetching,
   wordChars,
   wordChoice,
@@ -12,31 +14,36 @@ function App({
   resetGame,
   startGame,
   pickWord,
-  matchChar, 
-  fetchWordList}) {
+  matchChar,
+  fetchWordList,
+  resetKeys }) {
 
   useEffect(() => {
     fetchWordList();
     if (wordList !== '') {
       startGame();
     }
-  }, [wordList])
+  }, [wordList, resetGame])
 
   const letterCheck = (letter) => {
     let matched = matchChar(letter);
     console.log(matched)
   }
 
-  console.log(wordChars)
+  console.log(wordChoice)
   return (
     <div className="App">
+      <button className='new-game' onClick={() => {
+        resetGame();
+        resetKeys();
+      }}>New Game</button>
       <WordBuilder charaterObjs={wordChars} />
-      <Keyboard  matchLetter={letterCheck} letters={wordChars}/>
+      <Keyboard matchLetter={letterCheck} letters={wordChars} />
     </div>
   );
 }
 
-const mapToStateProps = ({wordReducer}) => {
+const mapToStateProps = ({ wordReducer }) => {
   return ({
     isFetching: wordReducer.isFetching,
     wordChoice: wordReducer.wordChoice,
@@ -49,5 +56,5 @@ const mapToStateProps = ({wordReducer}) => {
 
 export default connect(
   mapToStateProps,
-  { resetGame, startGame, fetchWordList, matchChar }
+  { resetGame, startGame, fetchWordList, matchChar, resetKeys }
 )(App);

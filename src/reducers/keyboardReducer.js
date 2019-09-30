@@ -1,8 +1,19 @@
-import { CLICK, BUILD } from "../actions/keyboardAction"
+import { CLICK, BUILD, RESET } from "../actions/keyboardAction"
 
 const initState = {
     letters: 'abcdefghijklmnopqrstuvwxyz',
     keys: []
+}
+
+const newKeyboard = (letters) => {
+    return (
+        letters.split('').map(el => {
+            return {
+                key: el,
+                isClicked: false
+            }
+        })
+    );
 }
 
 export const keyboardReducer = (state = initState, action) => {
@@ -11,12 +22,7 @@ export const keyboardReducer = (state = initState, action) => {
             return {
                 ...state,
                 // creates key objects
-                keys: state.letters.split('').map(el => {
-                    return {
-                        key: el,
-                        isClicked: false
-                    }
-                })
+                keys: newKeyboard(state.letters)
             }
         case CLICK:
             return {
@@ -26,8 +32,14 @@ export const keyboardReducer = (state = initState, action) => {
                         ...letter,
                         isClicked: true
                     } :
-                    letter
+                        letter
                 )
+            }
+        case RESET:
+            return {
+                ...state,
+                // creates key objects
+                keys: newKeyboard(state.letters)
             }
         default:
             return state;
