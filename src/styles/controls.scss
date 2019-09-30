@@ -16,5 +16,10 @@
         padding: 20px;
         background: white;
         border-radius: 0.5rem;
+        transition: 500ms;
+        &:hover {
+            cursor: pointer;
+            background: rgb(122, 226, 122);
+        }
     }
 }

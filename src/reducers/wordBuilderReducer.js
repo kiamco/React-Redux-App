@@ -71,7 +71,8 @@ export const WordReducer = (state = initialState, action) => {
             return {
                 ...state,
                 wordChoice: wordListParser(state.wordList),
-                wordChars: updateWord(state.wordChoice)
+                wordChars: updateWord(state.wordChoice),
+                life:6
             };
         case FETCH_WORD_LIST_FAILURE:
             return {

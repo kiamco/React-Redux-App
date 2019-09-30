@@ -29,17 +29,17 @@ function App({
     }
   }, [wordList, resetGame])
 
-  const letterCheck = (letter) => {
-    let matched = matchChar(letter);
-  }
+  const letterCheck = (letter) =>  matchChar(letter);
 
-  const lifeCheck = () => decreaseLife()
-
-  console.log(life);
   return (
     <div className="App">
+      <header>
+        <h1 className='title'>HANGMAN</h1>
+        <p>LEVEL 01</p>
+      </header>
+      
       <WordBuilder charaterObjs={wordChars} />
-      <Keyboard matchLetter={letterCheck} letters={wordChars} lifeCheck={lifeCheck} />
+      <Keyboard matchLetter={letterCheck} letters={wordChars} />
       <div className='extras'>
         <div className='life'>
           <h2>{life}</h2>
@@ -69,5 +69,5 @@ const mapToStateProps = ({ wordReducer }) => {
 
 export default connect(
   mapToStateProps,
-  { resetGame, startGame, fetchWordList, matchChar, resetKeys, decreaseLife }
+  { resetGame, startGame, fetchWordList, matchChar, resetKeys }
 )(App);
