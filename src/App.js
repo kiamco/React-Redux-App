@@ -29,7 +29,17 @@ function App({
     }
   }, [wordList, resetGame])
 
-  const letterCheck = (letter) =>  matchChar(letter);
+  const letterCheck = (letter) => matchChar(letter);
+
+  const heartSwitch = () => {
+    if (life === 6) {
+      return 'heartbeat'
+    } else if (life >= 3) {
+      return 'heart'
+    } else {
+      return 'heart outline'
+    }
+  }
 
   return (
     <div className="App">
@@ -37,13 +47,13 @@ function App({
         <h1 className='title'>HANGMAN</h1>
         <p>LEVEL 01</p>
       </header>
-      
+
       <WordBuilder charaterObjs={wordChars} />
       <Keyboard matchLetter={letterCheck} letters={wordChars} />
       <div className='extras'>
         <div className='life'>
           <h2>{life}</h2>
-          <Icon name='heartbeat' color='red' size='big' />
+          <Icon name={heartSwitch()} color='red' size='big' />
         </div>
         <button className='new-game' onClick={() => {
           resetGame();

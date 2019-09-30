@@ -96,7 +96,7 @@ export const WordReducer = (state = initialState, action) => {
         case LIFE_DECREASE:
             return {
                 ...state,
-                life:state.life - 1
+                life: state.life > 0 ? state.life - 1 : state.life
             }
         default:
             return state
