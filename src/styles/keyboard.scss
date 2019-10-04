@@ -1,0 +1,26 @@
+.keyboard {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    max-width: 400px;
+    margin: auto;
+    .keyboard-letter {
+        position: relative;
+        padding: 10px;
+        margin: 5px;
+        font-size: 1rem;
+        background: white;
+        border: 1px solid grey;
+        border-radius: .5rem;
+        transition: 500ms;
+        width: 40px;
+        &:hover {
+            cursor: pointer;
+            background: rgb(58, 57, 57);
+            color: white;
+        }
+    }
+    button:disabled {
+        background: rgb(58, 57, 57);
+    }
+}
