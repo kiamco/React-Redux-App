@@ -43,8 +43,9 @@ function App({
   }
 
   const lifeTracker = (letters, key) => {
-    let length = letters.filter(char => char.char === key);
-    return length < 1 ? decreaseLife() : 1;
+    //decrease player points when letter is not in word
+    let length = letters.filter(letter => letter.char === key);
+    return length < 1 && life > 0 ? decreaseLife() : 1;
   }
 
   return (
@@ -53,7 +54,6 @@ function App({
         <h1 className='title'>HANGMAN</h1>
         <p>LEVEL 01</p>
       </header>
-
       <WordBuilder charaterObjs={wordChars} />
       <Keyboard matchLetter={letterCheck} letters={wordChars} lifeTracker={lifeTracker} />
       <div className='extras'>
@@ -85,5 +85,12 @@ const mapToStateProps = ({ wordReducer }) => {
 
 export default connect(
   mapToStateProps,
-  { resetGame, startGame, fetchWordList, matchChar, resetKeys, decreaseLife }
+  {
+    resetGame,
+    startGame,
+    fetchWordList,
+    matchChar,
+    resetKeys,
+    decreaseLife
+  }
 )(App);

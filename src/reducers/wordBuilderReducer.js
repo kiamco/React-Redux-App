@@ -43,21 +43,6 @@ export const WordReducer = (state = initialState, action) => {
         )
     }
 
-    const lifeDecreser = () => {
-        let newLife = state.life;
-        let isMatch = state.wordChars.map(el => el.isShow ? el : undefined).filter(el => el === undefined).length;
-        let isMatchDif = state.wordChars.map(el => el.isShow ? el : undefined).filter(el => el !== undefined).length;
-        let charLength = state.wordChars.length;
-
-        // charLength > match then guess is correct
-        // 26 - ((26-isMatchdif) + [(charLength-isMatch) + (26-isMatchdif)])
-        if(isMatch > 1 ){
-            console.log(isMatch)
-            newLife = newLife - 1;            
-        }
-        return newLife;
-    }
-
     switch (action.type) {
 
         case FETCH_WORD_START:
@@ -111,13 +96,9 @@ export const WordReducer = (state = initialState, action) => {
                 ]
             };
         case LIFE_DECREASE:
-            let isMatch = state.wordChars.map(el => el.isShow ? el : undefined).filter(el => el===undefined).length;
-            let charLength = state.wordChars.length;
-            
             return {
                 ...state,
-                // life: state.life > 0 && isMatch <= charLength ? state.life - 1 : state.life
-                life: lifeDecreser()
+                life: state.life - 1
             }
         default:
             return state
