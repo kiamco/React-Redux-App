@@ -6,7 +6,8 @@ import {
     FETCH_WORD_START,
     MATCH_CHAR,
     START_GAME,
-    LIFE_DECREASE
+    LIFE_DECREASE,
+    decreaseLife
 } from '../actions/wordBuilderAction';
 
 const initialState = {
@@ -37,7 +38,7 @@ export const WordReducer = (state = initialState, action) => {
     const updateWord = (newWord) => {
         return (
             newWord.split('').map(el => {
-                return { char: el, isShow: false, isClicked: false }
+                return { char: el, isShow: false}
             })
         )
     }
@@ -62,7 +63,8 @@ export const WordReducer = (state = initialState, action) => {
                     // if payload matches a letter in selected word then show letter
                     letter.char === action.payload ? {
                         ...letter,
-                        isShow: true
+                        isShow: true,
+                        isMatch: true
                     } :
                         letter
                 )

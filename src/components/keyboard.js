@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { isClicked, buildKeyboard, resetKeys } from '../actions/keyboardAction';
-import {decreaseLife} from '../actions/wordBuilderAction';
+import {decreaseLife,wordChoice, wordChars} from '../actions/wordBuilderAction';
 
 const Keyboard = ({
     matchLetter,
@@ -9,7 +9,10 @@ const Keyboard = ({
     buildKeyboard,
     keys,
     resetKeys,
-    decreaseLife
+    decreaseLife,
+    wordChoice,
+    wordChars,
+    lifeTracker
 }) => {
 
     useEffect(() => {
@@ -26,8 +29,8 @@ const Keyboard = ({
                         onClick={(e) => {
                             matchLetter(el.key);
                             isClicked(el.key);
-                            decreaseLife();
-
+                            lifeTracker(wordChars, el.key);
+                            
                         }}
                         disabled={el.isClicked}
                     >
@@ -38,10 +41,12 @@ const Keyboard = ({
     )
 }
 
-const mapToStateProp = ({ keyboardReducer }) => {
+const mapToStateProp = ({ keyboardReducer, wordReducer, wordChars }) => {
     return ({
         letters: keyboardReducer.letters,
-        keys: keyboardReducer.keys
+        keys: keyboardReducer.keys,
+        wordChoice: wordReducer.wordChoice,
+        wordChars: wordReducer.wordChars
     })
 }
 

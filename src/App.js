@@ -20,7 +20,8 @@ function App({
   matchChar,
   fetchWordList,
   resetKeys,
-  life }) {
+  life,
+  decreaseLife }) {
 
   useEffect(() => {
     fetchWordList();
@@ -41,6 +42,11 @@ function App({
     }
   }
 
+  const lifeTracker = (letters, key) => {
+    let length = letters.filter(char => char.char === key);
+    return length < 1 ? decreaseLife() : 1;
+  }
+
   return (
     <div className="App">
       <header>
@@ -49,7 +55,7 @@ function App({
       </header>
 
       <WordBuilder charaterObjs={wordChars} />
-      <Keyboard matchLetter={letterCheck} letters={wordChars} />
+      <Keyboard matchLetter={letterCheck} letters={wordChars} lifeTracker={lifeTracker} />
       <div className='extras'>
         <div className='life'>
           <h2>{life}</h2>
@@ -79,5 +85,5 @@ const mapToStateProps = ({ wordReducer }) => {
 
 export default connect(
   mapToStateProps,
-  { resetGame, startGame, fetchWordList, matchChar, resetKeys }
+  { resetGame, startGame, fetchWordList, matchChar, resetKeys, decreaseLife }
 )(App);
