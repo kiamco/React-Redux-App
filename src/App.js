@@ -20,7 +20,8 @@ function App({
   matchChar,
   fetchWordList,
   resetKeys,
-  life }) {
+  life,
+  decreaseLife }) {
 
   useEffect(() => {
     fetchWordList();
@@ -29,8 +30,10 @@ function App({
     }
   }, [wordList, resetGame])
 
+  //  takes in a letter from the keyboard component and checks if there is a match
   const letterCheck = (letter) => matchChar(letter);
 
+  // change heart icon depending on the life points remaining
   const heartSwitch = () => {
     if (life === 6) {
       return 'heartbeat'
@@ -41,15 +44,22 @@ function App({
     }
   }
 
+  // this function keeps track of the player life
+  const lifeTracker = (letters, key) => {
+    
+    //length returns a 0 if chosen letter doesn't match
+    let length = letters.filter(letter => letter.char === key);
+    return length < 1 && life > 0 ? decreaseLife() : 1;
+  }
+
   return (
     <div className="App">
       <header>
         <h1 className='title'>HANGMAN</h1>
         <p>LEVEL 01</p>
       </header>
-
       <WordBuilder charaterObjs={wordChars} />
-      <Keyboard matchLetter={letterCheck} letters={wordChars} />
+      <Keyboard matchLetter={letterCheck} letters={wordChars} lifeTracker={lifeTracker} />
       <div className='extras'>
         <div className='life'>
           <h2>{life}</h2>
@@ -79,5 +89,12 @@ const mapToStateProps = ({ wordReducer }) => {
 
 export default connect(
   mapToStateProps,
-  { resetGame, startGame, fetchWordList, matchChar, resetKeys }
+  {
+    resetGame,
+    startGame,
+    fetchWordList,
+    matchChar,
+    resetKeys,
+    decreaseLife
+  }
 )(App);

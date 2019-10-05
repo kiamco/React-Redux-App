@@ -6,7 +6,7 @@ import {
     FETCH_WORD_START,
     MATCH_CHAR,
     START_GAME,
-    LIFE_DECREASE
+    LIFE_DECREASE,
 } from '../actions/wordBuilderAction';
 
 const initialState = {
@@ -28,33 +28,19 @@ const initialState = {
 
 export const WordReducer = (state = initialState, action) => {
 
-    // picks random word
+    // picks random word from the api
     const wordListParser = (words) => {
         let wordsArray = words.split('\n');
         return wordsArray[Math.floor(Math.random() * wordsArray.length)];
     }
 
+    // break the word down by letter
     const updateWord = (newWord) => {
         return (
             newWord.split('').map(el => {
-                return { char: el, isShow: false, isClicked: false }
+                return { char: el, isShow: false}
             })
         )
-    }
-
-    const lifeDecreser = () => {
-        let newLife = state.life;
-        let isMatch = state.wordChars.map(el => el.isShow ? el : undefined).filter(el => el === undefined).length;
-        let isMatchDif = state.wordChars.map(el => el.isShow ? el : undefined).filter(el => el !== undefined).length;
-        let charLength = state.wordChars.length;
-
-        // charLength > match then guess is correct
-        // 26 - ((26-isMatchdif) + [(charLength-isMatch) + (26-isMatchdif)])
-        if(isMatch > 1 ){
-            console.log(isMatch)
-            newLife = newLife - 1;            
-        }
-        return newLife;
     }
 
     switch (action.type) {
@@ -77,7 +63,8 @@ export const WordReducer = (state = initialState, action) => {
                     // if payload matches a letter in selected word then show letter
                     letter.char === action.payload ? {
                         ...letter,
-                        isShow: true
+                        isShow: true,
+                        isMatch: true
                     } :
                         letter
                 )
@@ -109,13 +96,9 @@ export const WordReducer = (state = initialState, action) => {
                 ]
             };
         case LIFE_DECREASE:
-            let isMatch = state.wordChars.map(el => el.isShow ? el : undefined).filter(el => el===undefined).length;
-            let charLength = state.wordChars.length;
-            
             return {
                 ...state,
-                // life: state.life > 0 && isMatch <= charLength ? state.life - 1 : state.life
-                life: lifeDecreser()
+                life: state.life - 1
             }
         default:
             return state

@@ -8,34 +8,49 @@ export const START_GAME = 'START_GAME';
 export const MATCH_CHAR = 'MATCH_CAHR';
 export const PICK_WORD = 'PICK_WORD';
 export const LIFE_DECREASE = 'LIFE_DECREASE';
+let words = window.localStorage.getItem('data');
 
 // http://app.linkedin-reach.io/words?difficulty=10
-const getWordListByLevel = (level, dispatch) => {
 
-}
+
 export const fetchWordList = () => {
     return function(dispatch) {
-        const proxy = "https://cors-anywhere.herokuapp.com/";
-        dispatch({ type: FETCH_WORD_START });
-        // setTimeout(() => {
-        Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
-            .then(res => {
-                // console.log(res)
-                dispatch({
-                    type: FETCH_WORD_LIST,
-                    payload: res.data
-                });
-                dispatch({ type: PICK_WORD })
+        console.log(words); 
+        if(words === null){
+            const proxy = "https://cors-anywhere.herokuapp.com/";
+            dispatch({ type: FETCH_WORD_START });
+            
+            setTimeout(() => {
+                Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
+                    .then(res => {
+                        // save data to local storage
+                        words = window.localStorage.setItem('data', res.data)
 
-            })
-            .catch(err => {
-                console.log(err);
-                dispatch({
-                    type: FETCH_WORD_LIST_FAILURE,
-                    payload: err.message
-                })
+                        // dispatch to reducers
+                        dispatch({
+                            type: FETCH_WORD_LIST,
+                            payload: res.data
+                        });
+                        dispatch({ type: PICK_WORD })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        dispatch({
+                            type: FETCH_WORD_LIST_FAILURE,
+                            payload: err.message
+                        })
+                    });
+            }, 1000);
+        } else {
+            // use local storage if data is in 
+            dispatch({
+                type: FETCH_WORD_LIST,
+                payload: window.localStorage.getItem('data')
             });
-        // }, 0);
+            dispatch({ type: PICK_WORD })
+        }
+
+       
     }
 };
 
