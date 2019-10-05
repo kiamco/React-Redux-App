@@ -7,7 +7,6 @@ import {
     MATCH_CHAR,
     START_GAME,
     LIFE_DECREASE,
-    decreaseLife
 } from '../actions/wordBuilderAction';
 
 const initialState = {
@@ -29,12 +28,13 @@ const initialState = {
 
 export const WordReducer = (state = initialState, action) => {
 
-    // picks random word
+    // picks random word from the api
     const wordListParser = (words) => {
         let wordsArray = words.split('\n');
         return wordsArray[Math.floor(Math.random() * wordsArray.length)];
     }
 
+    // break the word down by letter
     const updateWord = (newWord) => {
         return (
             newWord.split('').map(el => {

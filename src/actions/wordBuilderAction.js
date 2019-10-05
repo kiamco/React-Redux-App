@@ -12,6 +12,7 @@ let words = window.localStorage.getItem('data');
 
 // http://app.linkedin-reach.io/words?difficulty=10
 
+
 export const fetchWordList = () => {
     return function(dispatch) {
         console.log(words); 
@@ -22,14 +23,15 @@ export const fetchWordList = () => {
             setTimeout(() => {
                 Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
                     .then(res => {
-                        // 
+                        // save data to local storage
                         words = window.localStorage.setItem('data', res.data)
+
+                        // dispatch to reducers
                         dispatch({
                             type: FETCH_WORD_LIST,
                             payload: res.data
                         });
                         dispatch({ type: PICK_WORD })
-
                     })
                     .catch(err => {
                         console.log(err);
@@ -40,6 +42,7 @@ export const fetchWordList = () => {
                     });
             }, 1000);
         } else {
+            // use local storage if data is in 
             dispatch({
                 type: FETCH_WORD_LIST,
                 payload: window.localStorage.getItem('data')

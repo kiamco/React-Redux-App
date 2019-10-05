@@ -30,8 +30,10 @@ function App({
     }
   }, [wordList, resetGame])
 
+  //  takes in a letter from the keyboard component and checks if there is a match
   const letterCheck = (letter) => matchChar(letter);
 
+  // change heart icon depending on the life points remaining
   const heartSwitch = () => {
     if (life === 6) {
       return 'heartbeat'
@@ -42,8 +44,10 @@ function App({
     }
   }
 
+  // this function keeps track of the player life
   const lifeTracker = (letters, key) => {
-    //decrease player points when letter is not in word
+    
+    //length returns a 0 if chosen letter doesn't match
     let length = letters.filter(letter => letter.char === key);
     return length < 1 && life > 0 ? decreaseLife() : 1;
   }
