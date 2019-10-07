@@ -7,6 +7,7 @@ import {
     MATCH_CHAR,
     START_GAME,
     LIFE_DECREASE,
+    LOST,
 } from '../actions/wordBuilderAction';
 
 const initialState = {
@@ -38,7 +39,7 @@ export const WordReducer = (state = initialState, action) => {
     const updateWord = (newWord) => {
         return (
             newWord.split('').map(el => {
-                return { char: el, isShow: false}
+                return { char: el, isShow: false }
             })
         )
     }
@@ -46,11 +47,11 @@ export const WordReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case FETCH_WORD_START:
-            return { ...state, isFetching: true };
+            return {...state, isFetching: true };
         case FETCH_WORD_LIST:
-            return { ...state, wordList: action.payload, isFetching: false };
+            return {...state, wordList: action.payload, isFetching: false };
         case PICK_WORD:
-            return { ...state, wordChoice: wordListParser(state.wordList) }
+            return {...state, wordChoice: wordListParser(state.wordList) }
         case START_GAME:
             return {
                 ...state,
@@ -66,7 +67,7 @@ export const WordReducer = (state = initialState, action) => {
                         isShow: true,
                         isMatch: true
                     } :
-                        letter
+                    letter
                 )
             });
         case RESET_GAME:
@@ -74,7 +75,7 @@ export const WordReducer = (state = initialState, action) => {
                 ...state,
                 wordChoice: wordListParser(state.wordList),
                 wordChars: updateWord(state.wordChoice),
-                life:6
+                life: 6
             };
         case FETCH_WORD_LIST_FAILURE:
             return {
@@ -99,6 +100,12 @@ export const WordReducer = (state = initialState, action) => {
             return {
                 ...state,
                 life: state.life - 1
+            };
+        case LOST:
+            return {
+                ...state,
+                // show answer
+                wordChars: state.wordChars.map(letter => ({...letter, isShow: true, isMatch: true }))
             }
         default:
             return state

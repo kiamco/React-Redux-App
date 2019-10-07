@@ -8,6 +8,7 @@ export const START_GAME = 'START_GAME';
 export const MATCH_CHAR = 'MATCH_CAHR';
 export const PICK_WORD = 'PICK_WORD';
 export const LIFE_DECREASE = 'LIFE_DECREASE';
+export const LOST = 'LOST';
 let words = window.localStorage.getItem('data');
 
 // http://app.linkedin-reach.io/words?difficulty=10
@@ -15,13 +16,12 @@ let words = window.localStorage.getItem('data');
 
 export const fetchWordList = () => {
     return function(dispatch) {
-        console.log(words); 
-        if(words === null){
+        if (words === null) {
             const proxy = "https://cors-anywhere.herokuapp.com/";
             dispatch({ type: FETCH_WORD_START });
-            
+
             setTimeout(() => {
-                Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=10')
+                Axios.get(proxy + 'http://app.linkedin-reach.io/words?difficulty=5')
                     .then(res => {
                         // save data to local storage
                         words = window.localStorage.setItem('data', res.data)
@@ -50,7 +50,7 @@ export const fetchWordList = () => {
             dispatch({ type: PICK_WORD })
         }
 
-       
+
     }
 };
 
@@ -73,10 +73,14 @@ export const matchChar = (character) => {
 
 export const pickWord = () => {
     return function(dispatch) {
-        dispatch({ type: PICK_WORD })
+        dispatch({ type: PICK_WORD });
     }
 };
 
 export const decreaseLife = () => {
-    return (dispatch) => dispatch({ type: LIFE_DECREASE })
-}
+    return (dispatch) => dispatch({ type: LIFE_DECREASE });
+};
+
+export const lost = () => {
+    return (dispatch) => dispatch({ type: LOST });
+};
