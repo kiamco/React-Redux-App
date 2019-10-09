@@ -1,4 +1,4 @@
-import { CLICK, BUILD, RESET } from "../actions/keyboardAction"
+import { CLICK, BUILD, RESET, BLOCK } from "../actions/keyboardAction"
 
 const initState = {
     letters: 'abcdefghijklmnopqrstuvwxyz',
@@ -32,7 +32,7 @@ export const keyboardReducer = (state = initState, action) => {
                         ...letter,
                         isClicked: true
                     } :
-                        letter
+                    letter
                 )
             }
         case RESET:
@@ -40,6 +40,11 @@ export const keyboardReducer = (state = initState, action) => {
                 ...state,
                 // creates key objects
                 keys: newKeyboard(state.letters)
+            }
+        case BLOCK:
+            return {
+                ...state,
+                keys: state.keys.map(letter => ({...letter, isClicked: true }))
             }
         default:
             return state;

@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import WordBuilder from './components/wordBuilder';
 import './styles/all.scss';
 import { connect } from 'react-redux';
-import { resetGame, startGame, matchChar, fetchWordList, pickWord, decreaseLife } from './actions/wordBuilderAction';
+import { resetGame, startGame, matchChar, fetchWordList, pickWord, decreaseLife, lost} from './actions/wordBuilderAction';
 import Keyboard from './components/keyboard';
-import { resetKeys } from './actions/keyboardAction';
+import { resetKeys, blockKeys } from './actions/keyboardAction';
 import { Icon } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
+import scaffold from './img/scaffold.png';
 
 
 function App({
@@ -21,14 +22,18 @@ function App({
   fetchWordList,
   resetKeys,
   life,
-  decreaseLife }) {
+  decreaseLife,
+  blockKeys,
+  lost }) {
 
   useEffect(() => {
     fetchWordList();
     if (wordList !== '') {
       startGame();
     }
-  }, [wordList, resetGame])
+
+ 
+  }, [wordList, resetGame, blockKeys, lost ])
 
   //  takes in a letter from the keyboard component and checks if there is a match
   const letterCheck = (letter) => matchChar(letter);
@@ -44,13 +49,18 @@ function App({
     }
   }
 
-  // this function keeps track of the player life
+  // this function keeps track when player misses or hits a letter
   const lifeTracker = (letters, key) => {
-    
+
     //length returns a 0 if chosen letter doesn't match
     let length = letters.filter(letter => letter.char === key);
     return length < 1 && life > 0 ? decreaseLife() : 1;
   }
+
+  // let gameOver = life === 0 ? lost() : false;
+  // if player life reach 0
+  
+  let gameOver = life === 0 ? blockKeys() : false;
 
   return (
     <div className="App">
@@ -58,6 +68,15 @@ function App({
         <h1 className='title'>HANGMAN</h1>
         <p>LEVEL 01</p>
       </header>
+      <section className='hangman'>
+        {
+          gameOver
+            ?
+            <h1 className='loser'>YOU LOSE</h1> 
+            :
+            <img src={scaffold} alt="" />
+        }
+      </section>
       <WordBuilder charaterObjs={wordChars} />
       <Keyboard matchLetter={letterCheck} letters={wordChars} lifeTracker={lifeTracker} />
       <div className='extras'>
@@ -95,6 +114,8 @@ export default connect(
     fetchWordList,
     matchChar,
     resetKeys,
-    decreaseLife
+    decreaseLife,
+    blockKeys,
+    lost
   }
 )(App);
